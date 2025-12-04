@@ -102,22 +102,27 @@
 
   /* Schneefall */
     /* Schneefall */
-  #snow {
-    pointer-events: none;
-    position: fixed;
-    inset: 0;
-    background-image:
-      radial-gradient(circle, rgba(255,255,255,0.95) 1.4px, transparent 1px),
-      radial-gradient(circle, rgba(255,255,255,0.6) 1.8px, transparent 1px);
-    background-size: 6px 6px, 10px 10px;
-    background-position: 0 0, 4px 4px;
-    opacity: 0.3;               /* höher = besser sichtbar */
-    animation: snowMove 16s linear infinite;
-  }
-  @keyframes snowMove {
-    from { transform: translateY(-60px); }
-    to   { transform: translateY(60px); }
-  }
+  #/* Leichter, seltener Schneefall */
+#snow {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+}
+
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  opacity: 0.6;
+  font-size: 6px;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh); }
+}
 
 
   /* Inhalt unten: 3 Abschnitte */
@@ -208,6 +213,35 @@
   <br>
   <button class="quiz-btn" onclick="check()">Check</button>
   <div id="message" class="msg"></div>
+
+
+ <script>
+function createSnow() {
+  const flake = document.createElement("div");
+  flake.classList.add("snowflake");
+
+  // 70% klein, 25% mittel, 5% groß (wirklich selten)
+  const r = Math.random();
+  if (r < 0.7) flake.style.fontSize = "6px";
+  else if (r < 0.95) flake.style.fontSize = "10px";
+  else flake.style.fontSize = "16px";
+
+  flake.textContent = "❄";
+  flake.style.left = Math.random() * 100 + "vw";
+  const duration = 8 + Math.random() * 6; // 8–14s fall-time
+  flake.style.animationDuration = duration + "s";
+
+  document.getElementById("snow").appendChild(flake);
+
+  setTimeout(() => flake.remove(), duration * 1000);
+}
+
+// Start erst nach 2s, dann 1 Flocke alle 1–3 Sek (sehr wenig)
+setTimeout(() => {
+  setInterval(createSnow, 1000 + Math.random()*2000);
+}, 2000);
+</script>
+
 </div>
 
 <!-- 3 vorbereitete Abschnitte unten -->
