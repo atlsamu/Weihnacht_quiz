@@ -114,31 +114,27 @@
     to   { opacity:0.28; transform:translateY(2px); }
   }
 
-  /* Schneefall */
-    /* Schneefall */
   /* Leichter, seltener Schneefall */
-#snow2 {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  background: #000;
-  z-index: 9999;
-}
+  #snow2 {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    background: transparent; /* kein schwarzer Overlay mehr */
+    z-index: 9999;
+  }
 
-.snowflake {
-  position: fixed;
-  top: -10px;
-  color: white;
-  opacity: 0.6;
-  font-size: 6px;
-  animation: fall linear forwards;
-}
+  .snowflake {
+    position: fixed;
+    top: -10px;
+    color: white;
+    opacity: 0.6;
+    font-size: 6px;
+    animation: fall linear forwards;
+  }
 
-@keyframes fall {
-  to { transform: translateY(110vh); }
-}
-
-
+  @keyframes fall {
+    to { transform: translateY(110vh); }
+  }
 
   /* Punkte für Fortschritt */
   #dots {
@@ -171,10 +167,10 @@
 </style>
 </head>
 <body>
-<div id="snow2">
 
+<div id="snow2"></div>
 
- <script>
+<script>
 function createSnow() {
   const flake = document.createElement("div");
   flake.classList.add("snowflake");
@@ -190,18 +186,17 @@ function createSnow() {
   const duration = 8 + Math.random() * 6; // 8–14s fall-time
   flake.style.animationDuration = duration + "s";
 
-  document.getElementById("snow").appendChild(flake);
+  // WICHTIG: auf snow2, nicht snow!
+  document.getElementById("snow2").appendChild(flake);
 
   setTimeout(() => flake.remove(), duration * 1000);
 }
 
-// Start erst nach 2s, dann 1 Flocke alle 1–3 Sek (sehr wenig)
+// Start erst nach 2s, dann alle 1–3 Sekunden eine Flocke
 setTimeout(() => {
-  setInterval(createSnow, 1000 + Math.random()*2000);
+  setInterval(createSnow, 1000 + Math.random() * 2000);
 }, 2000);
 </script>
-
-</div>
 
 <h1>🎁 Frohe Weihnachten Mum 🎁</h1>
 
