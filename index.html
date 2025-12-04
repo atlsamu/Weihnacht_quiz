@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Christmas Quiz</title>
+<style>
+  body {
+    font-family:Arial, sans-serif;
+    background:#0a0f0d;
+    color:#fff;
+    text-align:center;
+    padding:40px;
+    overflow:hidden;
+  }
+  .title {font-size:2rem;margin-bottom:10px;}
+  .subtitle {opacity:0.8;margin-bottom:30px;font-size:1rem;}
+  .word {
+    font-size:1.6rem;
+    margin:20px 0;
+    background:rgba(255,0,0,0.2);
+    padding:10px 20px;
+    border-radius:12px;
+    display:inline-block;
+  }
+  input {
+    padding:12px;
+    border-radius:12px;
+    border:none;
+    font-size:1rem;
+    width:220px;
+    margin-top:10px;
+  }
+  button {
+    padding:10px 22px;
+    border-radius:999px;
+    border:none;
+    background:#d4af37;
+    color:#000;
+    margin-top:20px;
+    font-size:1rem;
+    cursor:pointer;
+    font-weight:bold;
+  }
+  button:hover {opacity:0.8;}
+  .msg {margin-top:20px;font-size:1rem;min-height:26px;font-weight:bold;}
+  /* snow */
+  #snow {
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    pointer-events:none;
+    background:url('static/snow.gif') repeat;
+    opacity:0.35;
+  }
+</style>
+</head>
+<body>
+<div id="snow"></div>
+<div class="title">🎄 Christmas Quiz 🎄</div>
+<div class="subtitle">500 Tage strak, aber bist du wirklich so gut? 😎</div>
+
+<!-- Hier Start Quiz -->
+<div id="quiz">
+  <div id="prompt" class="word"></div>
+  <br>
+  <input id="answer" placeholder="Antwort..." autocomplete="off"/>
+  <br>
+  <button onclick="check()">Check</button>
+  <div id="message" class="msg"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

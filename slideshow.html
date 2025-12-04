@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Für Mum 💛</title>
+<style>
+  body {
+    font-family: system-ui, Arial, sans-serif;
+    background:linear-gradient(to bottom,#6a1b9a,#1a237e,#000);
+    color:white;
+    text-align:center;
+    padding:30px;
+    margin:0;
+    overflow:hidden;
+  }
+  h1 {font-size:2.2rem;margin-bottom:8px;}
+  .textbox {
+    max-width:700px;
+    margin:0 auto 30px;
+    background:rgba(255,255,255,0.07);
+    padding:20px;
+    border-radius:18px;
+    box-shadow:0 0 20px rgba(0,0,0,0.5);
+    font-size:1rem;
+    min-height:40px;
+  }
+  .slides {
+    position:relative;
+    width:100%;
+    max-width:900px;
+    margin:0 auto;
+    border-radius:22px;
+    overflow:hidden;
+    background:black;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.7);
+    aspect-ratio:16/9;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:opacity 0.6s, transform 0.6s;
+    position:absolute;
+  }
+  .caption {
+    position:absolute;bottom:0;left:0;right:0;
+    background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);
+    padding:14px 10px 8px;
+    font-size:0.9rem;
+  }
+  .controls {
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+  }
+  button.ctrl {
+    padding:10px 22px;
+    border-radius:999px;
+    border:none;
+    background:#d32f2f;
+    color:#fff;
+    font-size:1rem;
+    cursor:pointer;
+  }
+  button.ctrl:hover {opacity:0.8;}
+  /* lights */
+  .lights {
+    margin-top:30px;
+    font-size:2rem;
+    opacity:0.15;
+    animation:pulse 2s infinite alternate;
+  }
+  @keyframes pulse {from{opacity:0.1;}to{opacity:0.2;}}
+</style>
+</head>
+<body>
+<h1>🎁 Frohe Weihnachten Mum 🎁</h1>
+
+<div class="textbox">
+  <!-- HIER TEXT REIN ✅ (du ersetzt nur Inhalt) -->
+
+</div>
+
+<div class="slides" id="frame">
+  <img id="slide1" src="1.jpg" style="opacity:1; transform:scale(1);" />
+  <div class="caption"><span id="captionText">💛</span></div>
+</div>
+
+<div class="controls">
+  <button class="ctrl" onclick="prev()">⟵ Zurück</button>
+  <button class="ctrl" onclick="playpause()">⏸ Pause</button>
+  <button class="ctrl" onclick="next()">Weiter ⟶</button>
+</div>
+
+<div class="lights">✶ ✶ ✶ ✶ ✶ ✶ ✶ ✶ ✶ ✶</div>
+
+<script>
+  // 10 Bilder für dich vorbereitet (nur Namen ändern, nicht löschen!)
+  const images = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg","8.jpg","9.jpg","10.jpg"];
+  let i = 0;
+  let playing = true;
+
+  function update() {
+    const el = document.getElementById("slide1");
+    el.style.opacity = 0;
+    el.style.transform = "scale(1.04)";
+    setTimeout(()=>{
+      el.src = images[i];
+      el.style.opacity = 1;
+      el.style.transform = "scale(1)";
+      document.getElementById("captionText").textContent = images[i];
+    },300);
+  }
+
+  function next() { i = (i+1)%images.length; update(); }
+  function prev() { i = (i-1+images.length)%images.length; update(); }
+  function playpause() {
+    playing = !playing;
+    document.querySelector("button.ctrl:nth-child(2)").textContent =
+      playing ? "⏸ Pause" : "▶ Play";
+  }
+
+  setInterval(()=>{ if(playing){ next(); }},3000);
+  update();
+</script>
+
+</body>
+</html>
