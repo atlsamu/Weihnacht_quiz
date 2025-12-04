@@ -115,22 +115,24 @@
   }
 
   /* Schneefall */
+    /* Schneefall */
   #snow2 {
     position: fixed;
     inset: 0;
     pointer-events: none;
     background-image:
-      radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px),
-      radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px);
-    background-size: 3px 3px, 5px 5px;
-    background-position: 0 0, 2px 2px;
-    opacity: 0.16;
-    animation: snowSlide 22s linear infinite;
+      radial-gradient(circle, rgba(255,255,255,0.95) 1.4px, transparent 1px),
+      radial-gradient(circle, rgba(255,255,255,0.65) 1.8px, transparent 1px);
+    background-size: 6px 6px, 10px 10px;
+    background-position: 0 0, 4px 4px;
+    opacity: 0.32;
+    animation: snowSlide 18s linear infinite;
   }
   @keyframes snowSlide {
-    from { transform: translateY(-60px); }
-    to   { transform: translateY(60px); }
+    from { transform: translateY(-70px); }
+    to   { transform: translateY(70px); }
   }
+
 
   /* Punkte für Fortschritt */
   #dots {
