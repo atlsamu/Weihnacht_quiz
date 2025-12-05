@@ -78,6 +78,7 @@
     margin-top: 10px;
     text-align: center;
   }
+
   button.quiz-btn {
     padding: 10px 22px;
     border-radius: 999px;
@@ -91,6 +92,7 @@
     position: relative;
     z-index: 1;
   }
+
   button.quiz-btn:hover { opacity: 0.85; }
 
   .msg {
@@ -100,12 +102,12 @@
     font-weight: bold;
   }
 
-  /* Schneefall-Overlay – WICHTIG: transparent! */
+  /* Schneefall-Overlay – transparent */
   #snow {
     pointer-events: none;
     position: fixed;
     inset: 0;
-    background: transparent; /* HIER war vorher #000 */
+    background: transparent;
     z-index: 9999;
   }
 
@@ -143,74 +145,7 @@
   </button>
 </div>
 
-<script>
-function createSnow() {
-  const flake = document.createElement("div");
-  flake.classList.add("snowflake");
-
-  const r = Math.random();
-  if (r < 0.7) flake.style.fontSize = "6px";
-  else if (r < 0.95) flake.style.fontSize = "10px";
-  else flake.style.fontSize = "16px";
-
-  flake.textContent = "❄";
-  flake.style.left = Math.random() * 100 + "vw";
-  const duration = 8 + Math.random() * 6;
-  flake.style.animationDuration = duration + "s";
-
-  document.getElementById("snow").appendChild(flake);
-
-  setTimeout(() => flake.remove(), duration * 1000);
-}
-
-setTimeout(() => {
-  setInterval(createSnow, 1000 + Math.random()*2000);
-}, 2000);
-</script>
-
-<script>
-const words = [
-  { de: "flasche", en: "bottle" },
-  { de: "kerze", en: "candle" },
-  { de: "kissen", en: "pillow" },
-  { de: "licht", en: "light" },
-  { de: "baum", en: "tree" }
-];
-
-let index = 0;
-
-const promptEl = document.getElementById("prompt");
-const answerEl = document.getElementById("answer");
-const messageEl = document.getElementById("message");
-const continueBtn = document.getElementById("continueBtn");
-
-promptEl.textContent = `${words[index].de}:`;
-
-function check() {
-  const input = answerEl.value.trim().toLowerCase();
-  const correct = words[index].en.toLowerCase();
-
-  if (input === correct) {
-    messageEl.textContent = "✅ Richtig!";
-    index++;
-    answerEl.value = "";
-
-    if (index >= words.length) {
-      promptEl.textContent = "Alle Wörter geschafft! 🎉";
-      continueBtn.style.display = "inline-block";
-      return;
-    }
-
-    promptEl.textContent = `${words[index].de}:`;
-  } else {
-    messageEl.textContent = "❌ Falsch, nochmal!";
-  }
-}
-
-function continueToSlideshow() {
-  window.location.href = "slideshow.html";
-}
-</script>
-
+<!-- Gemeinsame JavaScript-Datei -->
+<script src="script.js"></script>
 </body>
 </html>
