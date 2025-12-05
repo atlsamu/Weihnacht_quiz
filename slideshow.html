@@ -102,7 +102,6 @@
   }
   button.ctrl:hover { opacity: 0.86; }
 
-  /* Lichterkette */
   .lights {
     margin-top: 26px;
     font-size: 2rem;
@@ -114,12 +113,11 @@
     to   { opacity:0.28; transform:translateY(2px); }
   }
 
-  /* Leichter, seltener Schneefall */
   #snow2 {
     pointer-events: none;
     position: fixed;
     inset: 0;
-    background: transparent; /* kein schwarzer Overlay mehr */
+    background: transparent;
     z-index: 9999;
   }
 
@@ -136,7 +134,6 @@
     to { transform: translateY(110vh); }
   }
 
-  /* Punkte für Fortschritt */
   #dots {
     margin-top: 10px;
     display: flex;
@@ -175,7 +172,6 @@ function createSnow() {
   const flake = document.createElement("div");
   flake.classList.add("snowflake");
 
-  // 70% klein, 25% mittel, 5% groß (wirklich selten)
   const r = Math.random();
   if (r < 0.7) flake.style.fontSize = "6px";
   else if (r < 0.95) flake.style.fontSize = "10px";
@@ -183,16 +179,14 @@ function createSnow() {
 
   flake.textContent = "❄";
   flake.style.left = Math.random() * 100 + "vw";
-  const duration = 8 + Math.random() * 6; // 8–14s fall-time
+  const duration = 8 + Math.random() * 6;
   flake.style.animationDuration = duration + "s";
 
-  // WICHTIG: auf snow2, nicht snow!
   document.getElementById("snow2").appendChild(flake);
 
   setTimeout(() => flake.remove(), duration * 1000);
 }
 
-// Start erst nach 2s, dann alle 1–3 Sekunden eine Flocke
 setTimeout(() => {
   setInterval(createSnow, 1000 + Math.random() * 2000);
 }, 2000);
@@ -201,7 +195,6 @@ setTimeout(() => {
 <h1>🎁 Frohe Weihnachten Mum 🎁</h1>
 
 <div class="textbox">
-  <!-- HIER DEIN TEXT REIN ✅ -->
   <p>Hallo Mama, ich hoffe es gefällt dir. Hab dich lieb. Danke für alles! 💛</p>
 </div>
 
@@ -218,7 +211,6 @@ setTimeout(() => {
   <button class="ctrl" onclick="next()">Weiter ⟶</button>
 </div>
 
-<!-- Musiksteuerung -->
 <audio id="music" loop>
   <source src="music.mp3" type="audio/mpeg">
   Dein Browser unterstützt kein Audio.
@@ -236,7 +228,6 @@ setTimeout(() => {
 </p>
 
 <script>
-  // 10 Bilder – Dateinamen NICHT geändert
   const images = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg","8.jpg","9.jpg","10.jpg"];
   let i = 0;
   let playing = true;
@@ -244,10 +235,8 @@ setTimeout(() => {
   const slideEl = document.getElementById("slide1");
   const captionEl = document.getElementById("captionText");
   const playBtn = document.getElementById("playBtn");
-
   const dotsContainer = document.getElementById("dots");
 
-  // Punkte für Fortschritt erstellen
   images.forEach((_, idx) => {
     const d = document.createElement("span");
     if (idx === 0) d.classList.add("active");
@@ -268,7 +257,6 @@ setTimeout(() => {
       slideEl.src = images[i];
       slideEl.style.opacity = 1;
       slideEl.style.transform = "scale(1)";
-      // Wenn du willst, kannst du hier eigene Texte machen
       captionEl.textContent = "Bild " + (i + 1) + " von 10";
       setActiveDot();
     }, 280);
@@ -293,7 +281,6 @@ setTimeout(() => {
     if (playing) next();
   }, 3000);
 
-  // Musiksteuerung
   const music = document.getElementById("music");
 
   function playMusic() {
@@ -304,7 +291,6 @@ setTimeout(() => {
     music.pause();
   }
 
-  // Startzustand
   update();
 </script>
 
