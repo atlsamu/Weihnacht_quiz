@@ -101,7 +101,6 @@
   }
 
   /* Schneefall */
-  /* Schneefall */
   /* Leichter, seltener Schneefall */
   #snow {
     pointer-events: none;
@@ -170,7 +169,6 @@
     line-height: 1.4;
   }
 
-  /* Ausrichtung: links / rechts / mittig */
   .section-left  { justify-content: flex-start; }
   .section-right { justify-content: flex-end; flex-direction: row-reverse; text-align: right; }
   .section-right .section-text { text-align: right; }
@@ -213,7 +211,10 @@
   <button class="quiz-btn" onclick="check()">Check</button>
   <div id="message" class="msg"></div>
 
-  <!-- Hier war bei dir kein Fortfahren-Button, ich lasse das so – Weiterleitung macht script.js -->
+  <!-- NEU: Fortfahren-Button (am Anfang versteckt) -->
+  <button id="continueBtn" class="quiz-btn" style="display:none;" onclick="continueToSlideshow()">
+    Fortfahren ➜
+  </button>
 </div>
 
 <script>
