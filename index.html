@@ -100,26 +100,27 @@
     font-weight: bold;
   }
 
-#snow {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  background: #000;
-  z-index: 9999;
-}
+  /* Schneefall-Overlay – WICHTIG: transparent! */
+  #snow {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    background: transparent; /* HIER war vorher #000 */
+    z-index: 9999;
+  }
 
-.snowflake {
-  position: fixed;
-  top: -10px;
-  color: white;
-  opacity: 0.6;
-  font-size: 6px;
-  animation: fall linear forwards;
-}
+  .snowflake {
+    position: fixed;
+    top: -10px;
+    color: white;
+    opacity: 0.6;
+    font-size: 6px;
+    animation: fall linear forwards;
+  }
 
-@keyframes fall {
-  to { transform: translateY(110vh); }
-}
+  @keyframes fall {
+    to { transform: translateY(110vh); }
+  }
 </style>
 </head>
 <body>
