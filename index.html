@@ -100,7 +100,6 @@
     font-weight: bold;
   }
 
-  /* Schneefall */
 #snow {
   pointer-events: none;
   position: fixed;
@@ -121,7 +120,6 @@
 @keyframes fall {
   to { transform: translateY(110vh); }
 }
-
 </style>
 </head>
 <body>
@@ -139,7 +137,6 @@
   <button class="quiz-btn" onclick="check()">Check</button>
   <div id="message" class="msg"></div>
 
-  <!-- NEU: Fortfahren-Button -->
   <button id="continueBtn" class="quiz-btn" style="display:none;" onclick="continueToSlideshow()">
     Fortfahren ➜
   </button>
@@ -171,8 +168,6 @@ setTimeout(() => {
 </script>
 
 <script>
-// --- QUIZ SCRIPT MIT FORTFAHREN-BUTTON ---
-
 const words = [
   { de: "flasche", en: "bottle" },
   { de: "kerze", en: "candle" },
@@ -214,7 +209,6 @@ function check() {
 function continueToSlideshow() {
   window.location.href = "slideshow.html";
 }
-
 </script>
 
 </body>
