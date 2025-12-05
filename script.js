@@ -20,9 +20,11 @@ function check() {
     index++;
     document.getElementById("answer").value = "";
 
-    // Wenn alle Wörter fertig sind → weiterleiten
+    // Wenn alle Wörter fertig sind → keinen Auto-Redirect mehr
     if (index >= words.length) {
-      window.location.href = "slideshow.html";
+      document.getElementById("prompt").textContent = "Alle Wörter geschafft! 🎉";
+      const btn = document.getElementById("continueBtn");
+      if (btn) btn.style.display = "inline-block";
       return;
     }
 
@@ -31,4 +33,8 @@ function check() {
   } else {
     document.getElementById("message").textContent = "❌ Falsch, nochmal!";
   }
+}
+
+function continueToSlideshow() {
+  window.location.href = "slideshow.html";
 }
