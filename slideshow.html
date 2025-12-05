@@ -1,1 +1,312 @@
-<!DOCTYPE html> <html lang="de"> <head> <meta charset="UTF-8"> <title>Für Mum 💛</title> <style> * { box-sizing: border-box; margin:0; padding:0; } body { font-family: system-ui, Arial, sans-serif; background: radial-gradient(circle at top, #ff6f61 0, #311b92 40%, #000 100%); color: white; text-align: center; padding: 26px 12px 40px; margin: 0; overflow-x: hidden; } h1 { font-size: 2.2rem; margin-bottom: 10px; animation: fadeDown 1s ease-out; text-shadow: 0 0 18px rgba(255,255,255,0.7); } @keyframes fadeDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } } .textbox { max-width: 700px; margin: 0 auto 24px; background: rgba(255, 255, 255, 0.09); padding: 20px 18px; border-radius: 18px; box-shadow: 0 0 26px rgba(0, 0, 0, 0.7); font-size: 1rem; min-height: 40px; border: 1px solid rgba(255,255,255,0.15); } .slides { position: relative; width: 100%; max-width: 900px; margin: 0 auto; border-radius: 22px; overflow: hidden; background: black; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7); aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; } .slides img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.6s, transform 0.6s; position: absolute; } .caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); padding: 14px 10px 10px; font-size: 0.9rem; } .caption span { padding: 4px 12px; border-radius: 999px; background: rgba(0,0,0,0.4); display: inline-block; } .controls, .music-controls { margin-top: 18px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; } button.ctrl { padding: 10px 22px; border-radius: 999px; border: none; background: #d32f2f; color: #fff; font-size: 1rem; cursor: pointer; box-shadow: 0 6px 16px rgba(0,0,0,0.6); } .music-controls button.ctrl { background: #2e7d32; } button.ctrl:hover { opacity: 0.86; } /* Lichterkette */ .lights { margin-top: 26px; font-size: 2rem; opacity: 0.25; animation: pulse 2s infinite alternate; } @keyframes pulse { from { opacity:0.12; transform:translateY(0); } to { opacity:0.28; transform:translateY(2px); } } /* Leichter, seltener Schneefall */ #snow2 { pointer-events: none; position: fixed; inset: 0; background: transparent; /* kein schwarzer Overlay mehr */ z-index: 9999; } .snowflake { position: fixed; top: -10px; color: white; opacity: 0.6; font-size: 6px; animation: fall linear forwards; } @keyframes fall { to { transform: translateY(110vh); } } /* Punkte für Fortschritt */ #dots { margin-top: 10px; display: flex; justify-content: center; gap: 6px; } #dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); } #dots span.active { background: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.8); } .footer-note { margin-top: 16px; font-size: 0.8rem; opacity: 0.8; } @media (max-width: 600px) { h1 { font-size: 1.6rem; } .textbox { font-size: 0.95rem; padding: 16px 14px; } } </style> </head> <body> <div id="snow2"></div> <script> function createSnow() { const flake = document.createElement("div"); flake.classList.add("snowflake"); // 70% klein, 25% mittel, 5% groß (wirklich selten) const r = Math.random(); if (r < 0.7) flake.style.fontSize = "6px"; else if (r < 0.95) flake.style.fontSize = "10px"; else flake.style.fontSize = "16px"; flake.textContent = "❄"; flake.style.left = Math.random() * 100 + "vw"; const duration = 8 + Math.random() * 6; // 8–14s fall-time flake.style.animationDuration = duration + "s"; // WICHTIG: auf snow2, nicht snow! document.getElementById("snow2").appendChild(flake); setTimeout(() => flake.remove(), duration * 1000); } // Start erst nach 2s, dann alle 1–3 Sekunden eine Flocke setTimeout(() => { setInterval(createSnow, 1000 + Math.random() * 2000); }, 2000); </script> <h1>🎁 Frohe Weihnachten Mum 🎁</h1> <div class="textbox"> <!-- HIER DEIN TEXT REIN ✅ --> <p>Hallo Mama, ich hoffe es gefällt dir. Hab dich lieb. Danke für alles! 💛</p> </div> <div class="slides" id="frame"> <img id="slide1" src="1.jpg" style="opacity:1; transform:scale(1);" /> <div class="caption"><span id="captionText">💛</span></div> </div> <div id="dots"></div> <div class="controls"> <button class="ctrl" onclick="prev()">⟵ Zurück</button> <button class="ctrl" id="playBtn" onclick="playpause()">⏸ Pause</button> <button class="ctrl" onclick="next()">Weiter ⟶</button> </div> <!-- Musiksteuerung --> <audio id="music" loop> <source src="music.mp3" type="audio/mpeg"> Dein Browser unterstützt kein Audio. </audio> <div class="music-controls"> <button class="ctrl" onclick="playMusic()">▶ Musik weiter</button> <button class="ctrl" onclick="pauseMusic()">⏸ Musik pausieren</button> </div> <div class="lights">✶ ✶ ✶ ✶ ✶ ✶ ✶ ✶ ✶ ✶</div> <p class="footer-note"> Hab ich bestimmt OHNE KI gemacht haha 💛 </p> <script> // 10 Bilder – Dateinamen NICHT geändert const images = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg","8.jpg","9.jpg","10.jpg"]; let i = 0; let playing = true; const slideEl = document.getElementById("slide1"); const captionEl = document.getElementById("captionText"); const playBtn = document.getElementById("playBtn"); const dotsContainer = document.getElementById("dots"); // Punkte für Fortschritt erstellen images.forEach((_, idx) => { const d = document.createElement("span"); if (idx === 0) d.classList.add("active"); dotsContainer.appendChild(d); }); function setActiveDot() { const all = dotsContainer.querySelectorAll("span"); all.forEach((dot, idx) => { dot.classList.toggle("active", idx === i); }); } function update() { slideEl.style.opacity = 0; slideEl.style.transform = "scale(1.04)"; setTimeout(() => { slideEl.src = images[i]; slideEl.style.opacity = 1; slideEl.style.transform = "scale(1)"; // Wenn du willst, kannst du hier eigene Texte machen captionEl.textContent = "Bild " + (i + 1) + " von 10"; setActiveDot(); }, 280); } function next() { i = (i + 1) % images.length; update(); } function prev() { i = (i - 1 + images.length) % images.length; update(); } function playpause() { playing = !playing; playBtn.textContent = playing ? "⏸ Pause" : "▶ Play"; } setInterval(() => { if (playing) next(); }, 3000); // Musiksteuerung const music = document.getElementById("music"); function playMusic() { music.play().catch(()=>{}); } function pauseMusic() { music.pause(); } // Startzustand update(); </script> </body> </html>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Für Mum 💛</title>
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; }
+
+  body {
+    font-family: system-ui, Arial, sans-serif;
+    background: radial-gradient(circle at top, #ff6f61 0, #311b92 40%, #000 100%);
+    color: white;
+    text-align: center;
+    padding: 26px 12px 40px;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    animation: fadeDown 1s ease-out;
+    text-shadow: 0 0 18px rgba(255,255,255,0.7);
+  }
+  @keyframes fadeDown {
+    from { opacity:0; transform:translateY(-20px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .textbox {
+    max-width: 700px;
+    margin: 0 auto 24px;
+    background: rgba(255, 255, 255, 0.09);
+    padding: 20px 18px;
+    border-radius: 18px;
+    box-shadow: 0 0 26px rgba(0, 0, 0, 0.7);
+    font-size: 1rem;
+    min-height: 40px;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .slides {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 22px;
+    overflow: hidden;
+    background: black;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slides img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.6s, transform 0.6s;
+    position: absolute;
+  }
+
+  .caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+    padding: 14px 10px 10px;
+    font-size: 0.9rem;
+  }
+  .caption span {
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.4);
+    display: inline-block;
+  }
+
+  .controls,
+  .music-controls {
+    margin-top: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  button.ctrl {
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: none;
+    background: #d32f2f;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+  }
+  .music-controls button.ctrl {
+    background: #2e7d32;
+  }
+  button.ctrl:hover { opacity: 0.86; }
+
+  /* Lichterkette */
+  .lights {
+    margin-top: 26px;
+    font-size: 2rem;
+    opacity: 0.25;
+    animation: pulse 2s infinite alternate;
+  }
+  @keyframes pulse {
+    from { opacity:0.12; transform:translateY(0); }
+    to   { opacity:0.28; transform:translateY(2px); }
+  }
+
+  /* Leichter, seltener Schneefall */
+  #snow2 {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    background: transparent; /* kein schwarzer Overlay mehr */
+    z-index: 9999;
+  }
+
+  .snowflake {
+    position: fixed;
+    top: -10px;
+    color: white;
+    opacity: 0.6;
+    font-size: 6px;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    to { transform: translateY(110vh); }
+  }
+
+  /* Punkte für Fortschritt */
+  #dots {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+  #dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+  }
+  #dots span.active {
+    background: #fff;
+    box-shadow: 0 0 10px rgba(255,255,255,0.8);
+  }
+
+  .footer-note {
+    margin-top: 16px;
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 1.6rem; }
+    .textbox { font-size: 0.95rem; padding: 16px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="snow2"></div>
+
+<script>
+function createSnow() {
+  const flake = document.createElement("div");
+  flake.classList.add("snowflake");
+
+  // 70% klein, 25% mittel, 5% groß (wirklich selten)
+  const r = Math.random();
+  if (r < 0.7) flake.style.fontSize = "6px";
+  else if (r < 0.95) flake.style.fontSize = "10px";
+  else flake.style.fontSize = "16px";
+
+  flake.textContent = "❄";
+  flake.style.left = Math.random() * 100 + "vw";
+  const duration = 8 + Math.random() * 6; // 8–14s fall-time
+  flake.style.animationDuration = duration + "s";
+
+  // WICHTIG: auf snow2, nicht snow!
+  document.getElementById("snow2").appendChild(flake);
+
+  setTimeout(() => flake.remove(), duration * 1000);
+}
+
+// Start erst nach 2s, dann alle 1–3 Sekunden eine Flocke
+setTimeout(() => {
+  setInterval(createSnow, 1000 + Math.random() * 2000);
+}, 2000);
+</script>
+
+<h1>🎁 Frohe Weihnachten Mum 🎁</h1>
+
+<div class="textbox">
+  <!-- HIER DEIN TEXT REIN ✅ -->
+  <p>Hallo Mama, ich hoffe es gefällt dir. Hab dich lieb. Danke für alles! 💛</p>
+</div>
+
+<div class="slides" id="frame">
+  <img id="slide1" src="1.jpg" style="opacity:1; transform:scale(1);" />
+  <div class="caption"><span id="captionText">💛</span></div>
+</div>
+
+<div id="dots"></div>
+
+<div class="controls">
+  <button class="ctrl" onclick="prev()">⟵ Zurück</button>
+  <button class="ctrl" id="playBtn" onclick="playpause()">⏸ Pause</button>
+  <button class="ctrl" onclick="next()">Weiter ⟶</button>
+</div>
+
+<!-- Musiksteuerung -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+  Dein Browser unterstützt kein Audio.
+</audio>
+
+<div class="music-controls">
+  <button class="ctrl" onclick="playMusic()">▶ Musik weiter</button>
+  <button class="ctrl" onclick="pauseMusic()">⏸ Musik pausieren</button>
+</div>
+
+<div class="lights">✶ ✶ ✶ ✶ ✶ ✶ ✶ ✶ ✶ ✶</div>
+
+<p class="footer-note">
+  Hab ich bestimmt OHNE KI gemacht haha 💛
+</p>
+
+<script>
+  // 10 Bilder – Dateinamen NICHT geändert
+  const images = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg","8.jpg","9.jpg","10.jpg"];
+  let i = 0;
+  let playing = true;
+
+  const slideEl = document.getElementById("slide1");
+  const captionEl = document.getElementById("captionText");
+  const playBtn = document.getElementById("playBtn");
+
+  const dotsContainer = document.getElementById("dots");
+
+  // Punkte für Fortschritt erstellen
+  images.forEach((_, idx) => {
+    const d = document.createElement("span");
+    if (idx === 0) d.classList.add("active");
+    dotsContainer.appendChild(d);
+  });
+
+  function setActiveDot() {
+    const all = dotsContainer.querySelectorAll("span");
+    all.forEach((dot, idx) => {
+      dot.classList.toggle("active", idx === i);
+    });
+  }
+
+  function update() {
+    slideEl.style.opacity = 0;
+    slideEl.style.transform = "scale(1.04)";
+    setTimeout(() => {
+      slideEl.src = images[i];
+      slideEl.style.opacity = 1;
+      slideEl.style.transform = "scale(1)";
+      // Wenn du willst, kannst du hier eigene Texte machen
+      captionEl.textContent = "Bild " + (i + 1) + " von 10";
+      setActiveDot();
+    }, 280);
+  }
+
+  function next() {
+    i = (i + 1) % images.length;
+    update();
+  }
+
+  function prev() {
+    i = (i - 1 + images.length) % images.length;
+    update();
+  }
+
+  function playpause() {
+    playing = !playing;
+    playBtn.textContent = playing ? "⏸ Pause" : "▶ Play";
+  }
+
+  setInterval(() => {
+    if (playing) next();
+  }, 3000);
+
+  // Musiksteuerung
+  const music = document.getElementById("music");
+
+  function playMusic() {
+    music.play().catch(()=>{});
+  }
+
+  function pauseMusic() {
+    music.pause();
+  }
+
+  // Startzustand
+  update();
+</script>
+
+</body>
+</html>
