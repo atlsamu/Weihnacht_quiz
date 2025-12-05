@@ -101,8 +101,6 @@
   }
 
   /* Schneefall */
-    /* Schneefall */
-  #/* Leichter, seltener Schneefall */
 #snow {
   pointer-events: none;
   position: fixed;
@@ -124,87 +122,14 @@
   to { transform: translateY(110vh); }
 }
 
-
-  /* Inhalt unten: 3 Abschnitte */
-  .sections {
-    max-width: 900px;
-    margin: 24px auto 0;
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-  }
-
-  .section-card {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    padding: 14px 16px;
-    border-radius: 18px;
-    background: rgba(15, 15, 30, 0.92);
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.6);
-  }
-
-  .section-card img {
-    width: 90px;
-    height: 90px;
-    border-radius: 16px;
-    object-fit: cover;
-    flex-shrink: 0;
-    box-shadow: 0 0 15px rgba(0,0,0,0.7);
-  }
-
-  .section-text {
-    text-align: left;
-    flex: 1;
-    font-size: 0.9rem;
-  }
-
-  .section-text h3 {
-    font-size: 1rem;
-    margin-bottom: 6px;
-    text-shadow: 0 0 8px rgba(255,255,255,0.3);
-  }
-
-  .section-text p {
-    opacity: 0.9;
-    line-height: 1.4;
-  }
-
-  /* Ausrichtung: links / rechts / mittig */
-  .section-left  { justify-content: flex-start; }
-  .section-right { justify-content: flex-end; flex-direction: row-reverse; text-align: right; }
-  .section-right .section-text { text-align: right; }
-
-  .section-center {
-    flex-direction: column;
-    text-align: center;
-  }
-  .section-center img {
-    margin-bottom: 8px;
-  }
-  .section-center .section-text {
-    text-align: center;
-  }
-
-  @media (max-width: 700px) {
-    .section-card {
-      flex-direction: column;
-      text-align: center;
-    }
-    .section-right, .section-left {
-      justify-content: center;
-    }
-    .section-text { text-align: center !important; }
-  }
-
 </style>
 </head>
 <body>
+
 <div id="snow"></div>
 
 <div class="title">🎄 Christmas Quiz 🎄</div>
-<div class="subtitle">500 Tage streak in Duolingo, aber bist du wirklich so gut? 😎</div>
+<div class="subtitle">500 Tage Streak in Duolingo, aber bist du wirklich so gut? 😎</div>
 
 <div id="quiz">
   <div id="prompt" class="word"></div>
@@ -214,13 +139,17 @@
   <button class="quiz-btn" onclick="check()">Check</button>
   <div id="message" class="msg"></div>
 
+  <!-- NEU: Fortfahren-Button -->
+  <button id="continueBtn" class="quiz-btn" style="display:none;" onclick="continueToSlideshow()">
+    Fortfahren ➜
+  </button>
+</div>
 
- <script>
+<script>
 function createSnow() {
   const flake = document.createElement("div");
   flake.classList.add("snowflake");
 
-  // 70% klein, 25% mittel, 5% groß (wirklich selten)
   const r = Math.random();
   if (r < 0.7) flake.style.fontSize = "6px";
   else if (r < 0.95) flake.style.fontSize = "10px";
@@ -228,7 +157,7 @@ function createSnow() {
 
   flake.textContent = "❄";
   flake.style.left = Math.random() * 100 + "vw";
-  const duration = 8 + Math.random() * 6; // 8–14s fall-time
+  const duration = 8 + Math.random() * 6;
   flake.style.animationDuration = duration + "s";
 
   document.getElementById("snow").appendChild(flake);
@@ -236,48 +165,57 @@ function createSnow() {
   setTimeout(() => flake.remove(), duration * 1000);
 }
 
-// Start erst nach 2s, dann 1 Flocke alle 1–3 Sek (sehr wenig)
 setTimeout(() => {
   setInterval(createSnow, 1000 + Math.random()*2000);
 }, 2000);
 </script>
 
-</div>
+<script>
+// --- QUIZ SCRIPT MIT FORTFAHREN-BUTTON ---
 
-<!-- 3 vorbereitete Abschnitte unten -->
-<div class="sections">
+const words = [
+  { de: "flasche", en: "bottle" },
+  { de: "kerze", en: "candle" },
+  { de: "kissen", en: "pillow" },
+  { de: "licht", en: "light" },
+  { de: "baum", en: "tree" }
+];
 
-  <!-- Abschnitt 1 – links -->
-  <div class="section-card section-left">
-    <img src="b1.jpg" alt="Bild Abschnitt 1">
-    <div class="section-text">
-      <h3> haha</h3>
-      <p>jafshkjhsadkfjhsadfkj</p>
-    </div>
-  </div>
+let index = 0;
 
-  <!-- Abschnitt 2 – rechts -->
-  <div class="section-card section-right">
-    <img src="b2.jpg" alt="Bild Abschnitt 2">
-    <div class="section-text">
-      <h3>fbjasdhjfjhfs</h3>
-      <p> oder etwas, wofür du dankbar bist. --></p>
-    </div>
-  </div>
+const promptEl = document.getElementById("prompt");
+const answerEl = document.getElementById("answer");
+const messageEl = document.getElementById("message");
+const continueBtn = document.getElementById("continueBtn");
 
-  <!-- Abschnitt 3 – mittig -->
-  <div class="section-card section-center">
-    <img src="b3.jpg" alt="Bild Abschnitt 3">
-    <div class="section-text">
-      <h3> Danke auch an Robin! </h3>
-      
-     <p> Großes dankeschön auch an Robin dankeeeee das du mir geholfen hast nach LA zu kommen, das hat mehr verändert als du vielleicht denkst.</p>
-     <p> Danke Mama auch an dich das du mir geholfen hast mit Flug, Reisepass etc.</p>
-    </div>
-  </div>
+promptEl.textContent = `${words[index].de}:`;
 
-</div>
+function check() {
+  const input = answerEl.value.trim().toLowerCase();
+  const correct = words[index].en.toLowerCase();
 
-<script src="script.js"></script>
+  if (input === correct) {
+    messageEl.textContent = "✅ Richtig!";
+    index++;
+    answerEl.value = "";
+
+    if (index >= words.length) {
+      promptEl.textContent = "Alle Wörter geschafft! 🎉";
+      continueBtn.style.display = "inline-block";
+      return;
+    }
+
+    promptEl.textContent = `${words[index].de}:`;
+  } else {
+    messageEl.textContent = "❌ Falsch, nochmal!";
+  }
+}
+
+function continueToSlideshow() {
+  window.location.href = "slideshow.html";
+}
+
+</script>
+
 </body>
 </html>
